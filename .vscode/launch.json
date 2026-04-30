@@ -9,12 +9,7 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": [
         "run",
-        "dev",
-        "--",
-        "--host",
-        "0.0.0.0",
-        "--port",
-        "5175"
+        "dev"
       ],
       "console": "integratedTerminal",
       "autoAttachChildProcesses": true,
@@ -39,10 +34,10 @@
       ]
     },
     {
-      "name": "SvelteKit: Chrome (5175)",
+      "name": "SvelteKit: Chrome (4400)",
       "type": "pwa-chrome",
       "request": "launch",
-      "url": "http://localhost:5175",
+      "url": "http://localhost:4400",
       "webRoot": "${workspaceFolder}"
     }
   ]
