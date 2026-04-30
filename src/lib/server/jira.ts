@@ -10,7 +10,7 @@ type JiraConfig = {
 };
 
 function getJiraConfig(): JiraConfig {
-    const jira_base_url = (env.JIRA_BASE_URL || 'https://fleetcentinel.atlassian.net').replace(/\/$/, '');
+    const jira_base_url = (env.JIRA_BASE_URL || 'https://config_yours.atlassian.net').replace(/\/$/, '');
     const jira_email_token = env.JIRA_EMAIL_TOKEN || env.EMAIL_TOKEN || '';
     const jira_token = env.JIRA_TOKEN || '';
     const jira_project_key = env.JIRA_PROJECT_KEY || 'KAN';

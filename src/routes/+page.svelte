@@ -241,7 +241,7 @@
                         </svg>
                     </span>
                     <span class="jira_brand_text">micro-Jira</span>
-                    <span class="jira_brand_env"><strong>- DEV-FLEETCENTINEL -</strong></span>
+                    <span class="jira_brand_env"><strong>- {data.site_name} -</strong></span>
                     <span class="jira_brand_user">Usuario:&nbsp;&nbsp;<strong>{data.user}</strong></span>
                 </div>
             </div>

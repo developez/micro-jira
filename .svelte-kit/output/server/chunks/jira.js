@@ -1,7 +1,7 @@
 import axios from "axios";
 import { b as private_env } from "./shared-server.js";
 function getJiraConfig() {
-  const jira_base_url = (private_env.JIRA_BASE_URL || "https://fleetcentinel.atlassian.net").replace(/\/$/, "");
+  const jira_base_url = (private_env.JIRA_BASE_URL || "https://config_yours.atlassian.net").replace(/\/$/, "");
   const jira_email_token = private_env.JIRA_EMAIL_TOKEN || private_env.EMAIL_TOKEN || "";
   const jira_token = private_env.JIRA_TOKEN || "";
   const jira_project_key = private_env.JIRA_PROJECT_KEY || "KAN";

@@ -2,10 +2,11 @@
 import { redirect, fail } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { resolveCanonicalUsername, createSessionCookie } from '$lib/server/auth';
+import { getSiteName } from '$lib/server/site';
 
 export const load = async ({ locals }: Parameters<PageServerLoad>[0]) => {
     if (locals.user) redirect(303, '/');
-    return {};
+    return { site_name: getSiteName() };
 };
 
 export const actions = {

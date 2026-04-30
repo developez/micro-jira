@@ -1,8 +1,9 @@
 import { fail, redirect } from "@sveltejs/kit";
 import { r as resolveCanonicalUsername, c as createSessionCookie } from "../../../chunks/auth.js";
+import { g as getSiteName } from "../../../chunks/site.js";
 const load = async ({ locals }) => {
   if (locals.user) redirect(303, "/");
-  return {};
+  return { site_name: getSiteName() };
 };
 const actions = {
   default: async ({ request, cookies }) => {

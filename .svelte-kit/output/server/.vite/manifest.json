@@ -88,6 +88,13 @@
       "_render-context.js"
     ]
   },
+  "_site.js": {
+    "file": "chunks/site.js",
+    "name": "site",
+    "imports": [
+      "_shared-server.js"
+    ]
+  },
   "_state.svelte.js": {
     "file": "chunks/state.svelte.js",
     "name": "state.svelte",
@@ -165,7 +172,10 @@
     "file": "entries/pages/_page.server.ts.js",
     "name": "entries/pages/_page.server.ts",
     "src": "src/routes/+page.server.ts",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "_site.js"
+    ]
   },
   "src/routes/+page.svelte": {
     "file": "entries/pages/_page.svelte.js",
@@ -246,7 +256,8 @@
     "src": "src/routes/login/+page.server.ts",
     "isEntry": true,
     "imports": [
-      "_auth.js"
+      "_auth.js",
+      "_site.js"
     ]
   },
   "src/routes/login/+page.svelte": {

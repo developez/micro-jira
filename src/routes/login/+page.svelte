@@ -1,8 +1,9 @@
 <script lang="ts">
     import { enhance } from '$app/forms';
     import type { ActionData } from './$types';
+    import type { PageData } from './$types';
 
-    let { form }: { form: ActionData } = $props();
+    let { data, form }: { data: PageData; form: ActionData } = $props();
 </script>
 
 <div class="login_wrap">
@@ -22,7 +23,7 @@
             </span>
             <span>micro-Jira</span>
         </div>
-        <div class="login_env"><strong>DEV-FLEETCENTINEL</strong></div>
+        <div class="login_env"><strong>{data.site_name}</strong></div>
         <form method="POST" use:enhance>
             <div class="field">
                 <label for="username">usuario</label>
