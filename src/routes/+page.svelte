@@ -25,6 +25,8 @@
     let expanded_keys = $state<string[]>([]);
     let selected_key = $state('');
     let detail_by_key = $state<Record<string, DetailState>>({});
+    let preview_image_src = $state('');
+    let preview_image_alt = $state('');
 
     // --- Derivados ---
     type FlatRow = { issue: NormalizedIssue; level: number; has_children: boolean; is_expanded: boolean };
@@ -224,6 +226,38 @@
         window.location.href = '/login';
     }
 
+    function openImagePreview(event: MouseEvent) {
+        const target = event.target as HTMLElement | null;
+        const image = target?.closest('img.adf_image') as HTMLImageElement | null;
+        if (!image) return;
+
+        preview_image_src = image.currentSrc || image.src;
+        preview_image_alt = image.alt || 'Imagen Jira';
+    }
+
+    function imagePreviewAction(node: HTMLElement) {
+        node.addEventListener('click', openImagePreview);
+        return {
+            destroy() {
+                node.removeEventListener('click', openImagePreview);
+            }
+        };
+    }
+
+    function closeImagePreview() {
+        preview_image_src = '';
+        preview_image_alt = '';
+    }
+
+    function closeImagePreviewFromOverlay(event: MouseEvent) {
+        if (event.target === event.currentTarget) closeImagePreview();
+    }
+
+    function handlePreviewKeydown(event: KeyboardEvent) {
+        if (!preview_image_src) return;
+        if (event.key === 'Escape') closeImagePreview();
+    }
+
     onMount(() => {
         void runAction(loadTickets);
     });
@@ -363,7 +397,7 @@
                 {:else if current_detail?.is_loaded}
                     <div class="detail_block">
                         <div class="detail_title">Descripcion</div>
-                        <div class="description_body">
+                        <div class="description_body" use:imagePreviewAction>
                             {#if current_detail.description_html}
                                 {@html current_detail.description_html}
                             {:else}
@@ -434,6 +468,36 @@
         </aside>
     </section>
 </div>
+
+<svelte:window onkeydown={handlePreviewKeydown} />
+
+{#if preview_image_src}
+    <div
+        class="image_preview_overlay"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Vista ampliada de imagen"
+        tabindex="-1"
+        onkeydown={handlePreviewKeydown}
+        onclick={closeImagePreviewFromOverlay}
+    >
+        <div class="image_preview_shell">
+            <div class="image_preview_bar">
+                <span class="image_preview_title">{preview_image_alt}</span>
+                <button
+                    class="image_preview_close"
+                    type="button"
+                    title="Cerrar"
+                    aria-label="Cerrar imagen"
+                    onclick={closeImagePreview}
+                >
+                    x
+                </button>
+            </div>
+            <img class="image_preview_img" src={preview_image_src} alt={preview_image_alt} />
+        </div>
+    </div>
+{/if}
 
 <style>
     :root {
@@ -771,6 +835,10 @@
         height: auto;
         border: 1px solid var(--jira_border);
         border-radius: 4px;
+        cursor: zoom-in;
+    }
+    :global(.description_body img.adf_image:hover) {
+        border-color: var(--jira_blue_hover);
     }
     :global(.description_body .adf_media_fallback) {
         font-size: 11px;
@@ -854,6 +922,67 @@
         background: #fff;
         color: var(--jira_blue);
         border-color: #b3d4ff;
+    }
+
+    .image_preview_overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        background: rgba(9, 30, 66, 0.72);
+    }
+
+    .image_preview_shell {
+        width: min(1100px, 96vw);
+        max-height: 92vh;
+        display: grid;
+        grid-template-rows: auto minmax(0, 1fr);
+        background: var(--jira_surface);
+        border: 1px solid var(--jira_border);
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: 0 16px 40px rgba(9, 30, 66, 0.35);
+    }
+
+    .image_preview_bar {
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 0 8px 0 12px;
+        border-bottom: 1px solid var(--jira_border);
+        background: #fafbfc;
+    }
+
+    .image_preview_title {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--jira_text);
+    }
+
+    .image_preview_close {
+        width: 30px;
+        padding: 0;
+        flex: 0 0 auto;
+    }
+
+    .image_preview_img {
+        display: block;
+        max-width: 100%;
+        max-height: calc(92vh - 40px);
+        width: auto;
+        height: auto;
+        margin: auto;
+        object-fit: contain;
+        background: #fff;
     }
 
     @media (max-width: 1080px) {

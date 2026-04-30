@@ -60,7 +60,11 @@ function _page($$renderer, $$props) {
       $$renderer2.push("<!--[0-->");
       $$renderer2.push(`<div class="detail_block svelte-1uha8ag"><span class="muted svelte-1uha8ag">Panel vacio.</span></div>`);
     }
-    $$renderer2.push(`<!--]--></div></aside></section></div>`);
+    $$renderer2.push(`<!--]--></div></aside></section></div> `);
+    {
+      $$renderer2.push("<!--[-1-->");
+    }
+    $$renderer2.push(`<!--]-->`);
   });
 }
 export {
