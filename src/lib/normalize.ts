@@ -84,14 +84,19 @@ function sanitizeUrl(raw_url: unknown): string {
     return '';
 }
 
-function buildAttachmentProxyUrl(attachment_id: string, variant: 'content' | 'thumbnail'): string {
+function buildAttachmentProxyUrl(
+    attachment_id: string,
+    variant: 'content' | 'thumbnail',
+    base_path: string = ''
+): string {
     const safe_attachment_id = String(attachment_id || '').trim();
     if (!safe_attachment_id) return '';
+    const safe_base_path = String(base_path || '').replace(/\/$/, '');
     const params = new URLSearchParams({
         attachment_id: safe_attachment_id,
         variant
     });
-    return `/api/jira/attachment-content?${params.toString()}`;
+    return `${safe_base_path}/api/jira/attachment-content?${params.toString()}`;
 }
 
 function getParentIssueKey(issue_data: any): string | null {
@@ -218,7 +223,7 @@ export function formatDateText(value_text: string): string {
     });
 }
 
-export function extractAttachmentItems(detail_payload: any): AttachmentItem[] {
+export function extractAttachmentItems(detail_payload: any, base_path: string = ''): AttachmentItem[] {
     const raw = Array.isArray(detail_payload?.fields?.attachment)
         ? detail_payload.fields.attachment
         : [];
@@ -226,10 +231,10 @@ export function extractAttachmentItems(detail_payload: any): AttachmentItem[] {
         attachment_id: String(a?.id || ''),
         file_name: String(a?.filename || ''),
         content_url: String(a?.id || '').trim()
-            ? buildAttachmentProxyUrl(String(a?.id || ''), 'content')
+            ? buildAttachmentProxyUrl(String(a?.id || ''), 'content', base_path)
             : sanitizeUrl(a?.content),
         thumbnail_url: String(a?.id || '').trim()
-            ? buildAttachmentProxyUrl(String(a?.id || ''), 'thumbnail')
+            ? buildAttachmentProxyUrl(String(a?.id || ''), 'thumbnail', base_path)
             : sanitizeUrl(a?.thumbnail),
         mime_type: String(a?.mimeType || '')
     }));

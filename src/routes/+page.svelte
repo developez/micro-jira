@@ -137,7 +137,7 @@
 
             const detail_payload = detail_resp.data || {};
             const transitions_payload = transitions_resp.data || {};
-            const attachment_items = extractAttachmentItems(detail_payload);
+            const attachment_items = extractAttachmentItems(detail_payload, base);
             const description_adf = detail_payload?.fields?.description ?? null;
 
             detail.attachment_items = attachment_items;

@@ -250,12 +250,7 @@
     "file": "entries/endpoints/api/logout/_server.ts.js",
     "name": "entries/endpoints/api/logout/_server.ts",
     "src": "src/routes/api/logout/+server.ts",
-    "isEntry": true,
-    "imports": [
-      "_server.js",
-      "_url.js",
-      "_root.js"
-    ]
+    "isEntry": true
   },
   "src/routes/login/+page.server.ts": {
     "file": "entries/pages/login/_page.server.ts.js",
