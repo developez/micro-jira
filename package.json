@@ -5,11 +5,11 @@
   "scripts": {
     "predev": "node scripts/validate-startup.mjs",
     "dev": "vite dev --host 0.0.0.0 --port 4400",
-    "build": "vite build",
+    "build": "node --env-file=.env ./node_modules/vite/bin/vite.js build",
     "prepreview": "node scripts/validate-startup.mjs",
     "preview": "vite preview --host 0.0.0.0 --port 4400",
     "prestart": "node scripts/validate-startup.mjs",
-    "start": "PORT=4400 node build"
+    "start": "node --env-file=.env build"
   },
   "dependencies": {
     "@sveltejs/adapter-node": "^5.2.0",
