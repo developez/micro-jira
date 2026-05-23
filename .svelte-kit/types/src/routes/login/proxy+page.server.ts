@@ -29,6 +29,7 @@ export const actions = {
         cookies.set('session', session_value, {
             path: '/',
             httpOnly: true,
+            secure: false,
             sameSite: 'strict',
             maxAge: 60 * 60 * 8
         });
