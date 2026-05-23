@@ -26,7 +26,7 @@ export const actions: Actions = {
 
         const session_value = createSessionCookie(canonical_username);
         cookies.set('session', session_value, {
-            path: base || '/',
+            path: '/',
             httpOnly: true,
             sameSite: 'strict',
             maxAge: 60 * 60 * 8
