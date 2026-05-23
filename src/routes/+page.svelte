@@ -26,6 +26,7 @@
     let expanded_keys = $state<string[]>([]);
     let selected_key = $state('');
     let detail_by_key = $state<Record<string, DetailState>>({});
+    let detail_layout = $state<'side' | 'below'>('side');
     let preview_image_src = $state('');
     let preview_image_alt = $state('');
 
@@ -312,7 +313,7 @@
         <!--<div class="status_line">{status_text}</div>-->
     </section>
 
-    <section class="content_layout">
+    <section class="content_layout {detail_layout === 'below' ? 'detail_below' : ''}">
         <div class="table_wrap">
             <table>
                 <thead>
@@ -375,6 +376,25 @@
         </div>
 
         <aside class="detail_sidebar">
+            <div class="detail_layout_bar">
+                <button
+                    class="icon_btn"
+                    type="button"
+                    title={detail_layout === 'side' ? 'Ver detalle debajo' : 'Ver detalle a la derecha'}
+                    aria-label={detail_layout === 'side' ? 'Ver detalle debajo' : 'Ver detalle a la derecha'}
+                    onclick={() => (detail_layout = detail_layout === 'side' ? 'below' : 'side')}
+                >
+                    {#if detail_layout === 'side'}
+                        <svg class="action_icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M4 4h16v6H4V4zm0 10h16v6H4v-6zm2-8v2h12V6H6zm0 10v2h12v-2H6z" />
+                        </svg>
+                    {:else}
+                        <svg class="action_icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M4 4h7v16H4V4zm9 0h7v16h-7V4zM6 6v12h3V6H6zm9 0v12h3V6h-3z" />
+                        </svg>
+                    {/if}
+                </button>
+            </div>
             <div class="detail_sidebar_header">
                 <div class="detail_sidebar_key">
                     {selected_key || 'Ningun item seleccionado'}
@@ -636,6 +656,22 @@
         align-items: start;
     }
 
+    .content_layout.detail_below {
+        grid-template-columns: 1fr;
+    }
+
+    .content_layout.detail_below .table_wrap {
+        max-height: 45vh;
+    }
+
+    .content_layout.detail_below .detail_sidebar {
+        min-height: 360px;
+    }
+
+    .content_layout.detail_below .detail_pane {
+        max-height: none;
+    }
+
     .table_wrap {
         background: var(--jira_surface);
         border: 1px solid var(--jira_border);
@@ -753,8 +789,16 @@
         border-radius: 6px;
         min-height: calc(100vh - 120px);
         display: grid;
-        grid-template-rows: auto 1fr;
+        grid-template-rows: auto auto 1fr;
         overflow: hidden;
+    }
+
+    .detail_layout_bar {
+        border-bottom: 1px solid var(--jira_border);
+        padding: 8px;
+        display: flex;
+        justify-content: flex-end;
+        background: #fafbfc;
     }
 
     .detail_sidebar_header {

@@ -4019,8 +4019,8 @@ function Root($$renderer, $$props) {
 }
 const root = asClassComponent(Root);
 export {
-  ensure_array_like as a,
-  attr_class as b,
+  attr_class as a,
+  ensure_array_like as b,
   clsx as c,
   attr_style as d,
   escape_html as e,
