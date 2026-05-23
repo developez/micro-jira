@@ -1,5 +1,6 @@
 import { r as root } from "./root.js";
 import "./environment.js";
+import "./server.js";
 import "./shared-server.js";
 let read_implementation = null;
 function set_read_implementation(fn) {
@@ -97,7 +98,7 @@ const options = {
 		<div class="error">
 			<span class="status">` + status + '</span>\n			<div class="message">\n				<h1>' + message + "</h1>\n			</div>\n		</div>\n	</body>\n</html>\n"
   },
-  version_hash: "1ub6afn"
+  version_hash: "1koqera"
 };
 async function get_hooks() {
   let handle;

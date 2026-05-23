@@ -3,3 +3,4 @@ build/
 .svelte-kit/
 users.credentials
 .env
+.svelte-kit/

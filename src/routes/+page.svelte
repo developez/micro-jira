@@ -1,5 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
+    import { base } from '$app/paths';
     import type { PageData } from './$types';
     import { adfToHtml, escapeHtml } from '$lib/adf';
     import {
@@ -92,7 +93,7 @@
     // --- Acciones ---
     async function loadTickets() {
         status_text = 'Cargando tickets...';
-        const json = await callApi('/api/jira/tasks', {
+        const json = await callApi(`${base}/api/jira/tasks`, {
             query: { start_at: '0', max_results: '100', include_description: 'false' }
         });
         const payload = json.data || {};
@@ -126,10 +127,10 @@
 
         try {
             const [detail_resp, transitions_resp] = await Promise.all([
-                callApi('/api/jira/task-detail', {
+                callApi(`${base}/api/jira/task-detail`, {
                     query: { issue_key: key, include_description: 'true' }
                 }),
-                callApi('/api/jira/tasks-transitions', {
+                callApi(`${base}/api/jira/tasks-transitions`, {
                     query: { issue_key: key }
                 })
             ]);
@@ -183,7 +184,7 @@
         const detail = detail_by_key[key];
         const comment = (detail?.comment_text || '').trim();
         if (!comment) throw new Error('Escribe un comentario');
-        await callApi('/api/jira/tasks-comment', {
+        await callApi(`${base}/api/jira/tasks-comment`, {
             method: 'POST',
             body: { issue_key: key, comment }
         });
@@ -197,7 +198,7 @@
         const done = findDoneTransition(detail?.transitions || []);
         const transition_id = String(done?.id || detail?.selected_transition_id || '').trim();
         if (!transition_id) throw new Error('No hay transición a HECHO/Done');
-        await callApi('/api/jira/tasks-change-status', {
+        await callApi(`${base}/api/jira/tasks-change-status`, {
             method: 'POST',
             body: { issue_key: key, transition_id }
         });
@@ -222,8 +223,8 @@
     }
 
     async function logout() {
-        await fetch('/api/logout', { method: 'POST' });
-        window.location.href = '/login';
+        await fetch(`${base}/api/logout`, { method: 'POST' });
+        window.location.href = `${base}/login`;
     }
 
     function openImagePreview(event: MouseEvent) {

@@ -53,6 +53,15 @@ Para ejecutar el build Node:
 npm run start
 ```
 
+## Despliegue en subruta
+
+Si la aplicacion se publica bajo `/micro-jira`, define el base path antes de construir y arrancar:
+
+```bash
+BASE_PATH=/micro-jira npm run build
+BASE_PATH=/micro-jira npm run start
+```
+
 ## Estructura principal
 
 - `src/routes/+page.svelte`: pantalla principal de tickets.
