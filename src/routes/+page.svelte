@@ -320,7 +320,7 @@
                     <tr>
                         <th class="col_activity">Actividad</th>
                         <th class="col_type">Tipo</th>
-                        <th class="col_assignee">Persona asignada</th>
+                        <th class="col_assignee">Área</th>
                         <th class="col_priority">Prioridad</th>
                         <th class="col_status">Estado</th>
                     </tr>
