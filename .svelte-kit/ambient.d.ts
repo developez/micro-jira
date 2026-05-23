@@ -45,7 +45,10 @@ declare module '$env/static/private' {
 	export const JIRA_PROJECT_KEY: string;
 	export const SESSION_SECRET: string;
 	export const CREDENTIALS_FILE: string;
+	export const BASE_PATH: string;
 	export const PORT: string;
+	export const ORIGIN: string;
+	export const PROTOCOL_HEADER: string;
 	export const ALLUSERSPROFILE: string;
 	export const APPDATA: string;
 	export const CHROME_CRASHPAD_PIPE_NAME: string;
@@ -235,7 +238,10 @@ declare module '$env/dynamic/private' {
 		JIRA_PROJECT_KEY: string;
 		SESSION_SECRET: string;
 		CREDENTIALS_FILE: string;
+		BASE_PATH: string;
 		PORT: string;
+		ORIGIN: string;
+		PROTOCOL_HEADER: string;
 		ALLUSERSPROFILE: string;
 		APPDATA: string;
 		CHROME_CRASHPAD_PIPE_NAME: string;
