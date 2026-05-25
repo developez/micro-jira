@@ -224,7 +224,14 @@
     }
 
     async function logout() {
-        await fetch(`${base}/api/logout`, { method: 'POST' });
+        const response = await fetch(`${base}/api/logout`, {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: '{}'
+        });
+        if (!response.ok) {
+            throw new Error('No se pudo cerrar la sesion');
+        }
         window.location.href = `${base}/login`;
     }
 
